@@ -28,4 +28,11 @@ export const api = {
   deleteCard: (cardId) => request('DELETE', `/cards/my/${cardId}`),
   getTradeOverview: () => request('GET', '/trades/overview'),
   getTradeMatch: (userId) => request('GET', `/trades/match/${userId}`),
+  getProposalCount: () => request('GET', '/proposals/count'),
+  getProposals: () => request('GET', '/proposals'),
+  sendProposal: (toUserId, giveCardIds, getCardIds) =>
+    request('POST', '/proposals', { toUserId, giveCardIds, getCardIds }),
+  acceptProposal: (id) => request('PUT', `/proposals/${id}/accept`),
+  rejectProposal: (id) => request('PUT', `/proposals/${id}/reject`),
+  cancelProposal: (id) => request('DELETE', `/proposals/${id}`),
 };

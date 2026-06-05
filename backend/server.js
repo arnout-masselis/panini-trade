@@ -29,6 +29,7 @@ async function start() {
   app.use('/api/auth', require('./routes/auth'));
   app.use('/api/cards', require('./routes/cards'));
   app.use('/api/trades', require('./routes/trades'));
+  app.use('/api/proposals', require('./routes/proposals'));
 
   const PORT = process.env.PORT || 3001;
   app.listen(PORT, () =>

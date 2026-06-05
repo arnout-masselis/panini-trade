@@ -35,6 +35,21 @@ async function initDb() {
       quantity INTEGER NOT NULL DEFAULT 0 CHECK(quantity >= 0),
       UNIQUE(user_id, card_id)
     );
+
+    CREATE TABLE IF NOT EXISTS trade_proposals (
+      id SERIAL PRIMARY KEY,
+      from_user_id INTEGER NOT NULL REFERENCES users(id),
+      to_user_id INTEGER NOT NULL REFERENCES users(id),
+      status TEXT NOT NULL DEFAULT 'pending',
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    );
+
+    CREATE TABLE IF NOT EXISTS trade_proposal_items (
+      id SERIAL PRIMARY KEY,
+      proposal_id INTEGER NOT NULL REFERENCES trade_proposals(id) ON DELETE CASCADE,
+      card_id INTEGER NOT NULL REFERENCES cards(id),
+      direction TEXT NOT NULL
+    );
   `);
 }
 
