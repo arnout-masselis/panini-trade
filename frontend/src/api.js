@@ -35,4 +35,7 @@ export const api = {
   acceptProposal: (id) => request('PUT', `/proposals/${id}/accept`),
   rejectProposal: (id) => request('PUT', `/proposals/${id}/reject`),
   cancelProposal: (id) => request('DELETE', `/proposals/${id}`),
+  markTraded: (id, autoUpdate) => request('PUT', `/proposals/${id}/traded`, { autoUpdate }),
+  getMessages: (id) => request('GET', `/proposals/${id}/messages`),
+  sendMessage: (id, message) => request('POST', `/proposals/${id}/messages`, { message }),
 };

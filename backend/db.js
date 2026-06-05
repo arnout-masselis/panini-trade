@@ -50,6 +50,20 @@ async function initDb() {
       card_id INTEGER NOT NULL REFERENCES cards(id),
       direction TEXT NOT NULL
     );
+
+    CREATE TABLE IF NOT EXISTS trade_messages (
+      id SERIAL PRIMARY KEY,
+      proposal_id INTEGER NOT NULL REFERENCES trade_proposals(id) ON DELETE CASCADE,
+      from_user_id INTEGER NOT NULL REFERENCES users(id),
+      message TEXT NOT NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    );
+  `);
+
+  // Add columns introduced after initial deploy (safe to run repeatedly)
+  await pool.query(`
+    ALTER TABLE trade_proposals ADD COLUMN IF NOT EXISTS from_marked_traded BOOLEAN DEFAULT FALSE;
+    ALTER TABLE trade_proposals ADD COLUMN IF NOT EXISTS to_marked_traded BOOLEAN DEFAULT FALSE;
   `);
 }
 
